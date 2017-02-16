@@ -1,5 +1,7 @@
 """ Meaghen's color project """
 
+
+import math
 import random
 from PIL import Image
 
@@ -39,26 +41,33 @@ def build_random_function(min_depth, max_depth):
 #     y(a,b) = b
 # """
 def evaluate_random_function(f, x, y):
-    """ Evaluate the random function f with inputs x,y
-        Representation of the function f is defined in the assignment writeup
+#    """ Evaluate the random function f with inputs x,y
+#        Representation of the function f is defined in the assignment writeup
+#
+#        f: the function to evaluate
+#        x: the value of x to be used to evaluate the function
+#        y: the value of y to be used to evaluate the function
+#        returns: the function value
 
-        f: the function to evaluate
-        x: the value of x to be used to evaluate the function
-        y: the value of y to be used to evaluate the function
-        returns: the function value
-
-        >>> evaluate_random_function(["x"],-0.5, 0.75)
-        -0.5
-        >>> evaluate_random_function(["y"],0.1,0.02)
-        0.02
-    """
-    #print("f: ", f)
-    if f == ['x']:
+#        >>> evaluate_random_function(["x"],-0.5, 0.75)
+#        -0.5
+#        >>> evaluate_random_function(["y"],0.1,0.02)
+#        0.02
+#    """
+    if f[0] == 'x':
         return x
-    elif f == ['y']:
+    elif f[0] == 'y':
         return y
+    elif f[0] == 'average':
+        return (evaluate_random_function(f[1],x,y) + evaluate_random_function(f[2],x,y))/2
+    elif f[0] == 'prod':
+        return evaluate_random_function(f[1],x,y) * evaluate_random_function(f[2],x,y)
+    elif f[0] == 'cos_pi':
+        return math.cos(math.pi * evaluate_random_function(f[1],x,y))
+    elif f[0] == 'sin_pi':
+        return math.sin(math.pi * evaluate_random_function(f[1],x,y))
     else:
-        return "error"
+        raise Exception("THIS IS WRONG")
 
 
 def remap_interval(val,
@@ -170,8 +179,10 @@ if __name__ == '__main__':
     # Create some computational art!
     # TODO: Un-comment the generate_art function call after you
     #       implement remap_interval and evaluate_random_function
-    # generate_art("myart.png")
+    generate_art("pic2.png")
     # Test that PIL is installed correctly
     # TODO: Comment or remove this function call after testing PIL install
     #test_image("noise.png")
-    print(build_random_function(1,5))
+    #print(build_random_function(1,5))
+    #print(evaluate_random_function(['blahahahah'], 1, 1))
+    #print(evaluate_random_function(['average', ['x'], ['y']], -1, 1))
