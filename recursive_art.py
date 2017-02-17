@@ -28,9 +28,9 @@ def build_random_function(min_depth, max_depth):
             return basecase[random.randint(0,1)]
 
     block = func[random.randint(2,5)]
-    if block == 'prod' or block == 'average':
+    if block == 'prod' or block == 'average' or 'exp':
         return [block, build_random_function(min_depth -1 , max_depth - 1), build_random_function(min_depth-1, max_depth-1)]
-    elif block == 'cos_pi' or block == 'sin_pi':
+    elif block == 'cos_pi' or block == 'sin_pi' or block == 'root':
         return [block, build_random_function(min_depth -1 , max_depth - 1)]
 # """
 #     prod(a,b) = a*b
@@ -60,12 +60,16 @@ def evaluate_random_function(f, x, y):
         return y
     elif f[0] == 'average':
         return (evaluate_random_function(f[1],x,y) + evaluate_random_function(f[2],x,y))/2
+    elif f[0] == 'exp':
+        return ((evaluate_random_function(f[1],x,y))**(evaluate_random_function(f[2],x,y)))
     elif f[0] == 'prod':
         return evaluate_random_function(f[1],x,y) * evaluate_random_function(f[2],x,y)
     elif f[0] == 'cos_pi':
         return math.cos(math.pi * evaluate_random_function(f[1],x,y))
     elif f[0] == 'sin_pi':
         return math.sin(math.pi * evaluate_random_function(f[1],x,y))
+    elif f[0] == 'root':
+        return math.sqrt(evaluate_random_function(f[1],x,y))
     else:
         raise Exception("THIS IS WRONG")
 
@@ -179,7 +183,7 @@ if __name__ == '__main__':
     # Create some computational art!
     # TODO: Un-comment the generate_art function call after you
     #       implement remap_interval and evaluate_random_function
-    generate_art("pic2.png")
+    generate_art("pic12.png")
     # Test that PIL is installed correctly
     # TODO: Comment or remove this function call after testing PIL install
     #test_image("noise.png")
